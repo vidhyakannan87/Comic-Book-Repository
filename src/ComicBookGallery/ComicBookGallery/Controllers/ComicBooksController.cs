@@ -3,31 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ComicBookGallery.Data;
 using ComicBookGallery.Models;
 
 namespace ComicBookGallery.Controllers
 {
     public class ComicBooksController:Controller
     {
-        public ActionResult Detail()
-        {
-            var comicBook = new ComicBook
-            {
-                SeriesTitle = "The Amazing Spider-Man",
-                IssueNumber = 700,
-                DescriptionHTML = "<p>Final issue! Witness the final hours of Doctor Octopus' life and his one, last, great act of revenge! Even if Spider-Man survives... <strong>will Peter Parker?</strong></p>",
-                Artists = new Artist[]
-                {
-                    new Artist(){Name = "", Role = "Script"},
-                    new Artist(){Name = "Dan Slott", Role = "Pencils"},
-                    new Artist(){Name = "Humberto Ramos", Role = "Inks"},
-                    new Artist(){Name = "Victor Olazaba", Role = "Colors"},
-                    new Artist(){Name = "Edgar Delgado", Role = ""},
-                    new Artist(){Name = "Chris Eliopoulos", Role = "Letters"},
 
-                }
-            };
-            
+        private ComicBookRepository _comicBookRepository;
+        public ComicBooksController()
+        {
+            _comicBookRepository = new ComicBookRepository();
+        }
+        public ActionResult Detail(int? id)
+        {
+            if(id == null)
+            {
+                return HttpNotFound();
+            }
+            var comicBook = _comicBookRepository.GetComicBook(id.Value);
+           
             return View(comicBook);
         }
     }
