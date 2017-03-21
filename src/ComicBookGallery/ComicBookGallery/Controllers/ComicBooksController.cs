@@ -10,7 +10,7 @@ namespace ComicBookGallery.Controllers
     {
         public ActionResult Detail()
         {
-            return Content("Hello from Comic World!!");
+            return View();
         }
     }
 }
